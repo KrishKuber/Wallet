@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+    
+    <div class="split left">
+        <h1 class="login-prompt">Hello!</h1>
+        <div class="separator"></div>
+        <h2 class="register-info">Everything is just as you left it ;)</h2>
+        </div>
+        
+    <form method="post" class="split right" onsubmit="return validate();">
+        <div class="form">
+            <p>{{ error }}</p>
+        <div class="form-group">
+            <input autocomplete="off" minlength="4" required autofocus class="form-control" id="name" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control"  minlength="4" required id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="button solid" type="submit">Login</button>
+        </div>
+        <p style="margin-top: 50px">Not yet registered? Join us for free!<a href="/register"> Register</a></p>
+    </form>
+{% endblock %}

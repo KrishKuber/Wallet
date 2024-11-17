@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+
+    <div class="split left">
+        <h1 class="register-prompt">Join Wallet for free.</h1>
+        <div class="separator"></div>
+        <h2 class="register-info">"Beware of small expenses. A small leak will sink a great ship"</h2>
+        <h2 class="quote">-Benjamin Franklin</h3>
+        </div>
+
+    <form method="post" class="split right" onsubmit ="return validate() && checku()">
+        <div class="form">
+        <div class="form-group">
+            <input autocomplete="off" minlength="3" required autofocus class="form-control" id="name" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control"  minlength="4" required id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" required minlength="4" id="confirmation" name="confirmation" placeholder="Confirm password" type="password">
+        </div>
+        <button class="button solid" type="submit">Register</button>
+        </div>
+        <p id="margin">Already registered?<a href="/login"> Login</a></p>
+    </form>
+    <script>
+        function validate()
+        {
+          let p = document.querySelector('#password').value;
+          let c = document.querySelector('#confirmation').value;
+          if(p != c)
+          {
+              alert("Password and confirmation do not match");
+              return false;
+          }
+          return true;
+        }
+        function checku()
+        {
+            var username = document.getElementById("name").value;
+            $.post("/register/check", {"username" : username}, function(data){
+                console.log(data['error'] + 1);
+                if(data['error'] == 1)
+                {
+                    alert("Username already exists");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
+            });
+          
+        }
+    </script>
+{% endblock %}

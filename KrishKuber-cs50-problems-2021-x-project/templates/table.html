@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Table
+{% endblock %}
+
+{% block main %}
+    <select name="cars" id="options" onChange="show();">
+    <option disabled selected="selected">Search Using:</option>
+    <option value="date">Date</option>
+    <option value="item">Item</option>
+    <option value="category">Category</option>
+    <option value="mode">Mode</option>
+    <option value="price">Price</option>
+    
+</select> 
+<form id="searcher" method="post" action="/"><div id="s"></div></form>
+    <table class="tb">
+                
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Mode</th>
+                <th>Price</th>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for record in records %}
+            <tr>
+                <td>{{record['date']}}</td>
+                <td>{{record['item']}}</td>
+                 <td>{{record['category']}}</td>
+                <td>{{record['mode']}}</td>
+                <td>{{record['price']}}</td>
+               
+                <form margin="0px" action="/table/delete" method="post"><input type="hidden" name="recordid" value="{{ record['record_id'] }}"></input><td><button type="submit" class="btn btn-primary">Delete</button></td></form>
+            </tr>
+        {% endfor %}    
+        <tr>
+                <form action="/table" method="post" margin="0px">
+                <td><input type="date" name="date" required minlength="1" autocomplete="off"></input></td>    
+                <td><input type="text" name="item" required minlength="1" autocomplete="off"></input></td>
+                <td><input type="text" name="category" required minlength="1" autocomplete="off"></input></td>
+                <td><input type="text" name="mode" required minlength="1" autocomplete="off"></input></td>
+                <td><input type="number" name="price" required minlength="1" autocomplete="off"></input></td>
+                
+                <td><button type="submit" class="btn btn-primary" autocomplete="off">Add</button></td>
+                </form>
+            </tr>
+            </div>
+            
+            <script>
+                function show()
+                {
+                    option = document.getElementById('options').value;
+                    if(option == 'date')
+                    {
+                        document.getElementById('s').innerHTML = '<input type="date" name="sdate"  autocomplete="off"> <button type="submit" class="btn btn-primary" autocomplete="off" >Search</button>';
+                        document.getElementById("searcher").action = "/table/date";
+                    }
+                    else if(option == 'item')
+                    {
+                        document.getElementById('s').innerHTML = '<input type="text" name="sitem" autocomplete="off" placeholder="Item"></input> <button type="submit" class="btn btn-primary" autocomplete="off">Search</button>';
+                        document.getElementById("searcher").action = "/table/item";                    
+                    }
+                    else if(option == 'price')
+                    {
+                        document.getElementById('s').innerHTML = '<input type="number" name="sprice" autocomplete="off" placeholder="Price"></input> <button type="submit" class="btn btn-primary" autocomplete="off">Search</button>';
+                        document.getElementById("searcher").action = "/table/price";
+                    }
+                    else if(option == 'category')
+                    {
+                        document.getElementById('s').innerHTML = '<input type="text" name="scategory" autocomplete="off" placeholder="Category"></input> <button type="submit" class="btn btn-primary" autocomplete="off">Search</button>';
+                        document.getElementById("searcher").action = "/table/category";
+                    }
+                    else if(option == 'mode')
+                    {
+                        document.getElementById('s').innerHTML = '<input type="text" name="smode"  autocomplete="off" placeholder="Mode"></input> <button type="submit" class="btn btn-primary" autocomplete="off">Search</button>';
+                        document.getElementById("searcher").action = "/table/mode";
+                    }
+                    
+                   
+     
+                }
+            </script>
+{% endblock %}

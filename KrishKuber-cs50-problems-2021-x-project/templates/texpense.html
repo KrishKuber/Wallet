@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Today's Expenses
+{% endblock %}
+
+{% block main %}
+    
+    <table class="tbt">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Mode</th>
+                <th>Price</th>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for record in records %}
+            <tr>
+                <td>{{record['item']}}</td>
+                <td>{{record['category']}}</td>
+                <td>{{record['mode']}}</td>
+                <td>{{record['price']}}</td>
+                
+                <form action="/texpense/delete" method="post"><input type="hidden" name="recordid" value="{{ record['record_id'] }}"></input><td><button type="submit" class="btn btn-primary">Delete</button></td></form>
+                </tr>
+        {% endfor %}
+            
+            <tr>
+                <form action="/texpense" method="post">
+                <td><input type="text" name="item" required minlength="1" autocomplete="off"></input></td>
+                 <td><input type="text" name="category" required minlength="1" autocomplete="off"></input></td>
+                <td><input type="text" name="mode" required minlength="1" autocomplete="off"></input></td>
+                <td><input type="number" name="price" required minlength="1" autocomplete="off"></input></td>
+               
+                <td><button type="submit" class="btn btn-primary" autocomplete="off">Add</button></td>
+                </form>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td>{{total}}</td>
+            </tr>
+        </tbody>
+        
+            
+    </table>
+   
+{% endblock %}
